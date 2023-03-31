@@ -1,10 +1,15 @@
-public class Clients {
+public class Client {
     private int id;
     private String firstname;
     private String lastname;
-    private int day;
-    private int month;
-    private int year;
+    private Date birthdate;
+
+    public Client(int id, String firstname, String lastname, Date birthdate) {
+        this.id = id;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.birthdate = birthdate;
+    }
 
     public int getId() {
         return id;
@@ -18,18 +23,9 @@ public class Clients {
         return lastname;
     }
 
-    public int getDay() {
-        return day;
+    public Date getBirthdate() {
+        return birthdate;
     }
-
-    public int getMonth() {
-        return month;
-    }
-
-    public int getYear() {
-        return year;
-    }
-
     public void setId(int id) {
         this.id = id;
     }
@@ -42,15 +38,7 @@ public class Clients {
         this.lastname = lastname;
     }
 
-    public void setDay(int day) {
-        this.day = day;
-    }
-
-    public void setMonth(int month) {
-        this.month = month;
-    }
-
-    public void setYear(int year) {
-        this.year = year;
+    public void setBirthdate (Date birthdate) {
+        this.birthdate = birthdate;
     }
 }
