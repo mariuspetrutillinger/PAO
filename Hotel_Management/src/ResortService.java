@@ -41,10 +41,10 @@ public class ResortService {
                 rs.add(resort);
             }
         }
-        if(rs.size() == 1) {
+        if(rs.size() >= 1) {
             return rs;
         } else {
-            return null;
+            return Collections.emptyList();
         }
     }
 
@@ -55,12 +55,10 @@ public class ResortService {
                 rs.add(resort);
             }
         }
-        if(rs.size() == 1) {
+        if(rs.size() >= 1) {
             return rs;
         } else {
-            return null;
+            return Collections.emptyList();
         }
     }
-
-
 }

@@ -42,10 +42,10 @@ public class ClientService {
                 cl.add(client);
             }
         }
-        if(cl.size() == 1) {
+        if(cl.size() >= 1) {
             return cl;
         } else {
-            return null;
+            return Collections.emptyList();
         }
     }
 
@@ -56,10 +56,10 @@ public class ClientService {
                 cl.add(client);
             }
         }
-        if(cl.size() == 1) {
+        if(cl.size() >= 1) {
             return cl;
         } else {
-            return null;
+            return Collections.emptyList();
         }
     }
 
