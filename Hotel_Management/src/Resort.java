@@ -1,10 +1,11 @@
 public class Resort {
+    private static int nextId = 1;
     private int id;
     private String name;
     private String location;
 
-    public Resort(int id, String name, String location) {
-        this.id = id;
+    public Resort(String name, String location) {
+        this.id = nextId++;
         this.name = name;
         this.location = location;
     }
@@ -31,5 +32,14 @@ public class Resort {
 
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    @Override
+    public String toString() {
+        return "Resort{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", location='" + location + '\'' +
+                '}';
     }
 }

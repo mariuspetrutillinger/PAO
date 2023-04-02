@@ -2,8 +2,8 @@ public class Room extends RoomType {
     private int id;
     private int resort_id;
 
-    public Room(int id, int resort_id, String description, int quantity, int price) {
-        super(description, quantity, price);
+    public Room(int id, int resort_id, String description, int price) {
+        super(description, price);
         this.id = id;
         this.resort_id = resort_id;
     }

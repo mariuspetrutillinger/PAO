@@ -4,18 +4,13 @@ public class RoomType {
     protected int price;
 
     public RoomType() {}
-    public RoomType(String description, int quantity, int price) {
+    public RoomType(String description, int price) {
         this.description = description;
-        this.quantity = quantity;
         this.price = price;
     }
 
     public String getDescription() {
         return description;
-    }
-
-    public int getQuantity() {
-        return quantity;
     }
 
     public int getPrice() {
@@ -24,10 +19,6 @@ public class RoomType {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
     }
 
     public void setPrice(int price) {
