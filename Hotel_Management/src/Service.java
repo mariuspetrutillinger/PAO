@@ -15,14 +15,18 @@ public class Service {
     private static Service instance;
     AuditLogger auditLogger = new AuditLogger();
 
-    public static Service getInstance(){
-        if(instance == null){
-            instance = new Service();
+    public static Service getInstance() {
+        if (instance == null) {
+            synchronized (Service.class) {
+                if (instance == null) {
+                    instance = new Service();
+                }
+            }
         }
         return instance;
     }
 
-    public Service() {
+    private Service() {
         scanner = new Scanner(System.in);
         clientService = ClientService.getInstance();
         resortService = ResortService.getInstance();
