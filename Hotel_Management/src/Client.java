@@ -8,7 +8,14 @@ public class Client {
     private LocalDate birthdate;
 
     public Client(String firstname, String lastname, LocalDate birthdate) {
-        this.id = nextId++;
+        this.id = ++nextId;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.birthdate = birthdate;
+    }
+
+    public Client(Integer id, String firstname, String lastname, LocalDate birthdate) {
+        this.id = id;
         this.firstname = firstname;
         this.lastname = lastname;
         this.birthdate = birthdate;

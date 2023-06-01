@@ -4,7 +4,15 @@ public class Staff {
     private String firstname;
     private String lastname;
     private String role;
+    private static int nextId = 1;
 
+    public Staff(int resort_id, String firstname, String lastname, String role) {
+        this.id = ++nextId;
+        this.resort_id = resort_id;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.role = role;
+    }
     public Staff(int id, int resort_id, String firstname, String lastname, String role) {
         this.id = id;
         this.resort_id = resort_id;
@@ -51,5 +59,16 @@ public class Staff {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    @Override
+    public String toString() {
+        return "Staff{" +
+                "id=" + id +
+                ", resort_id=" + resort_id +
+                ", firstname='" + firstname + '\'' +
+                ", lastname='" + lastname + '\'' +
+                ", role='" + role + '\'' +
+                '}';
     }
 }

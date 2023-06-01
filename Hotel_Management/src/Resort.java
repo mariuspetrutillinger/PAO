@@ -5,7 +5,13 @@ public class Resort {
     private String location;
 
     public Resort(String name, String location) {
-        this.id = nextId++;
+        this.id = ++nextId;
+        this.name = name;
+        this.location = location;
+    }
+
+    public Resort(Integer id, String name, String location) {
+        this.id = id;
         this.name = name;
         this.location = location;
     }

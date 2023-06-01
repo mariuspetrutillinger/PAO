@@ -1,6 +1,7 @@
 public class Bill {
     private int id;
     private Reservation reservation;
+    private static int nextId = 1;
 
     public Bill(int id, Reservation reservation) {
         this.id = id;
