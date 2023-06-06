@@ -1,6 +1,9 @@
+package AppServices;
+
+import Models.Reservation;
+
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class ReservationService {
     private Connection connection;
@@ -46,9 +49,9 @@ public class ReservationService {
         }
     }
 
-    public List<Reservation> getAllReservations() {
-        List<Reservation> reservations = new ArrayList<>();
-        String sql = "SELECT * FROM reservations";
+    public Set<Reservation> getAllReservations() {
+        SortedSet<Reservation> reservations = new TreeSet<>(Comparator.comparing(Reservation::getReservation_number));
+        String sql = "SELECT * FROM reservations ORDER BY ID_RESERVATION ASC";
         try {
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(sql);
@@ -116,5 +119,20 @@ public class ReservationService {
         }
 
         return reservations;
+    }
+
+    public void updateReservation(Reservation reservation) {
+        if (getReservationById(reservation.getReservation_number()) == null) {
+            System.out.println("Client with ID " + reservation.getReservation_number() + " does not exist.");
+            return;
+        }
+        String sql = "UPDATE reservations SET CLIENT_ID = ? WHERE ID_RESERVATION = ?";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, reservation.getClient_id());
+            statement.setInt(2, reservation.getReservation_number());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

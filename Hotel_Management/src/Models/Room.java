@@ -1,3 +1,5 @@
+package Models;
+
 public class Room extends RoomType {
     private int id;
     private int resort_id;

@@ -1,8 +1,9 @@
+package AppServices;
+
+import Models.Staff;
+
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class StaffService {
     private Connection connection;
@@ -49,8 +50,8 @@ public class StaffService {
     }
 
     public Set<Staff> getStaff() {
-        Set<Staff> staffMembers = new HashSet<>();
-        String sql = "SELECT * FROM staff";
+        SortedSet<Staff> staffMembers = new TreeSet<>(Comparator.comparing(Staff::getId));
+        String sql = "SELECT * FROM staff ORDER BY ID_STAFF ASC";
         try (Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(sql)) {
             while (resultSet.next()) {
@@ -148,5 +149,24 @@ public class StaffService {
             e.printStackTrace();
         }
         return staffMembers;
+    }
+
+    public void updateStaff(Staff staff) {
+        if (getStaffById(staff.getId()) == null) {
+            System.out.println("Client with ID " + staff.getId() + " does not exist.");
+            return;
+        }
+
+        String sql = "UPDATE staff SET RESORT_ID = ?, FIRST_NAME = ?, LAST_NAME = ?, ROLE = ? WHERE ID_STAFF = ?";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, staff.getResort_id());
+            statement.setString(2, staff.getFirstname());
+            statement.setString(3, staff.getLastname());
+            statement.setString(4, staff.getRole());
+            statement.setInt(5, staff.getId());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

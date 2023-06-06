@@ -1,3 +1,8 @@
+package Models;
+
+import Models.Reservation;
+import Models.Room;
+
 import java.time.LocalDate;
 
 public class ReservedRoom extends Reservation {

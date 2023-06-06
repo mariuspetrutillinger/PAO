@@ -1,10 +1,15 @@
+import AppServices.ClientService;
+import AppServices.ReservationService;
+import AppServices.ResortService;
+import AppServices.StaffService;
+import Models.Client;
+import Models.Reservation;
+import Models.Resort;
+import Models.Staff;
+
 import java.util.*;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 
 public class Service {
     private Scanner scanner;
@@ -88,6 +93,7 @@ public class Service {
             System.out.println("3. View all clients");
             System.out.println("4. Search client by ID");
             System.out.println("5. Search client by name");
+            System.out.println("6. Update client");
             System.out.println("0. Back to main menu");
             System.out.print("Enter your choice: ");
             int option = scanner.nextInt();
@@ -114,6 +120,10 @@ public class Service {
                     searchClientByName();
                     auditLogger.logAction("Searched client by name");
                     break;
+                case 6:
+                    updatingClient();
+                    auditLogger.logAction("Updated client");
+                    break;
                 case 0:
                     back = true;
                     auditLogger.logAction("Returned to main menu");
@@ -125,6 +135,31 @@ public class Service {
         }
     }
 
+    private void updatingClient() {
+        System.out.print("Enter the ID of the client to update: ");
+        int id = scanner.nextInt();
+        scanner.nextLine(); // Consume newline character
+
+        Client client = clientService.getClientById(id);
+        if (client != null) {
+            System.out.print("Enter First Name: ");
+            String firstName = scanner.nextLine();
+
+            System.out.print("Enter Last Name: ");
+            String lastName = scanner.nextLine();
+
+            System.out.print("Enter Birthdate (dd-MM-yyyy): ");
+            String birthdate = scanner.nextLine();
+            LocalDate birthdateDate = LocalDate.parse(birthdate, DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+
+            Client client2 = new Client(id, firstName, lastName, birthdateDate);
+
+            clientService.updateClient(client2);
+            System.out.println("Client updated successfully.");
+        } else {
+            System.out.println("Client not found with the given ID.");
+        }
+    }
     private void addClient() {
         System.out.print("Enter First Name: ");
         String firstName = scanner.nextLine();
@@ -205,6 +240,7 @@ public class Service {
             System.out.println("3. View all resorts");
             System.out.println("4. Search resort by ID");
             System.out.println("5. Search resort by name");
+            System.out.println("6. Update resort");
             System.out.println("0. Back to main menu");
             System.out.print("Enter your choice: ");
             int option = scanner.nextInt();
@@ -231,6 +267,10 @@ public class Service {
                     searchResortByName();
                     auditLogger.logAction("Searched resort by name");
                     break;
+                case 6:
+                    updatingResort();
+                    auditLogger.logAction("Updated resort");
+                    break;
                 case 0:
                     back = true;
                     auditLogger.logAction("Returned to main menu");
@@ -242,6 +282,27 @@ public class Service {
         }
     }
 
+    private void updatingResort() {
+        System.out.print("Enter the ID of the resort to update: ");
+        int id = scanner.nextInt();
+        scanner.nextLine(); // Consume newline character
+
+        Resort resort = resortService.getResortById(id);
+        if (resort != null) {
+            System.out.print("Enter Name: ");
+            String name = scanner.nextLine();
+
+            System.out.print("Enter Location: ");
+            String location = scanner.nextLine();
+
+            Resort resort2 = new Resort(id, name, location);
+
+            resortService.updateResort(resort2);
+            System.out.println("Resort updated successfully.");
+        } else {
+            System.out.println("Resort not found with the given ID.");
+        }
+    }
     private void addResort() {
         System.out.print("Enter Name: ");
         String name = scanner.nextLine();
@@ -318,6 +379,7 @@ public class Service {
             System.out.println("3. View all staff members");
             System.out.println("4. Search staff member by ID");
             System.out.println("5. Search staff member by name");
+            System.out.println("6. Update staff member");
             System.out.println("0. Back to main menu");
             System.out.print("Enter your choice: ");
             int option = scanner.nextInt();
@@ -344,6 +406,10 @@ public class Service {
                     searchStaffByName();
                     auditLogger.logAction("Searched staff member by name");
                     break;
+                case 6:
+                    updatingStaff();
+                    auditLogger.logAction("Updated staff member");
+                    break;
                 case 0:
                     back = true;
                     auditLogger.logAction("Returned to main menu");
@@ -355,6 +421,33 @@ public class Service {
         }
     }
 
+    private void updatingStaff() {
+        System.out.print("Enter the ID of the staff member to update: ");
+        int id = scanner.nextInt();
+        scanner.nextLine(); // Consume newline character
+
+        Staff staff = staffService.getStaffById(id);
+        if (staff != null) {
+            System.out.print("Enter Resort ID: ");
+            int resortId = scanner.nextInt();
+            scanner.nextLine(); // Consume newline character
+
+            System.out.print("Enter First Name: ");
+            String firstName = scanner.nextLine();
+
+            System.out.print("Enter Last Name: ");
+            String lastName = scanner.nextLine();
+
+            System.out.print("Enter Role: ");
+            String role = scanner.nextLine();
+
+            Staff staff2 = new Staff(id, resortId, firstName, lastName, role);
+            staffService.updateStaff(staff2);
+            System.out.println("Staff member updated successfully.");
+        } else {
+            System.out.println("Staff member not found with the given ID.");
+        }
+    }
     private void addStaff() {
         System.out.print("Enter Resort ID: ");
         int resortId = scanner.nextInt();
@@ -438,6 +531,7 @@ public class Service {
             System.out.println("3. View all reservations");
             System.out.println("4. Search reservation by ID");
             System.out.println("5. Search reservations by client ID");
+            System.out.println("6. Update reservation");
             System.out.println("0. Back to main menu");
             System.out.print("Enter your choice: ");
             int option = scanner.nextInt();
@@ -464,6 +558,10 @@ public class Service {
                     searchReservationsByClientId();
                     auditLogger.logAction("Searched reservations by client ID");
                     break;
+                case 6:
+                    updatingReservation();
+                    auditLogger.logAction("Updated reservation");
+                    break;
                 case 0:
                     back = true;
                     auditLogger.logAction("Returned to main menu");
@@ -475,6 +573,24 @@ public class Service {
         }
     }
 
+    private void updatingReservation() {
+        System.out.print("Enter the ID of the reservation to update: ");
+        int id = scanner.nextInt();
+        scanner.nextLine(); // Consume newline character
+
+        Reservation reservation = reservationService.getReservationById(id);
+        if (reservation != null) {
+            System.out.print("Enter Client ID: ");
+            int clientId = scanner.nextInt();
+            scanner.nextLine(); // Consume newline character
+
+            Reservation reservation2 = new Reservation(id, clientId);
+            reservationService.updateReservation(reservation2);
+            System.out.println("Reservation updated successfully.");
+        } else {
+            System.out.println("Reservation not found with the given ID.");
+        }
+    }
     private void addReservation() {
         System.out.print("Enter client ID: ");
         int clientId = scanner.nextInt();
@@ -506,7 +622,7 @@ public class Service {
     }
 
     private void viewAllReservations() {
-        List<Reservation> reservations = reservationService.getAllReservations();
+        Set<Reservation> reservations = reservationService.getAllReservations();
         if (reservations.isEmpty()) {
             System.out.println("No reservations found.");
         } else {

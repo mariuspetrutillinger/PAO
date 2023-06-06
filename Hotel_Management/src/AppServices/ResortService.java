@@ -1,15 +1,17 @@
-import java.time.LocalDate;
+package AppServices;
+
+import Models.Resort;
+
 import java.util.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.Date;
 
 
 public class ResortService {
-    private Set<Resort> resorts = new HashSet<Resort>();
+    private SortedSet<Resort> resorts = new TreeSet<>(Comparator.comparing(Resort::getId));
     private static ResortService instance;
     Connection connection;
 
@@ -52,8 +54,8 @@ public class ResortService {
     }
 
     public Set<Resort> getResorts() {
-        Set<Resort> resorts = new HashSet<>();
-        String sql = "SELECT * FROM resorts";
+        SortedSet<Resort> resorts = new TreeSet<>(Comparator.comparing(Resort::getId));
+        String sql = "SELECT * FROM resorts ORDER BY ID_RESORT";
         try (Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(sql)) {
             while (resultSet.next()) {
@@ -105,8 +107,26 @@ public class ResortService {
         return resorts;
     }
 
-//    public List<Resort> getResortByLocation(String location) {
-//        List<Resort> resorts = new ArrayList<>();
+    public void updateResort(Resort resort) {
+        // Check if the resort exists
+        if (getResortById(resort.getId()) == null) {
+            System.out.println("Resort with ID " + resort.getId() + " does not exist.");
+            return;
+        }
+
+        String sql = "UPDATE resorts SET NAME = ?, LOCATION = ? WHERE ID_RESORT = ?";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, resort.getName());
+            statement.setString(2, resort.getLocation());
+            statement.setInt(3, resort.getId());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+//    public List<Models.Resort> getResortByLocation(String location) {
+//        List<Models.Resort> resorts = new ArrayList<>();
 //        String sql = "SELECT * FROM resorts WHERE LOCATION = ?";
 //        try (PreparedStatement statement = connection.prepareStatement(sql)) {
 //            statement.setString(1, location);
@@ -114,7 +134,7 @@ public class ResortService {
 //                while (resultSet.next()) {
 //                    int id = resultSet.getInt("ID_RESORT");
 //                    String name = resultSet.getString("NAME");
-//                    Resort resort = new Resort(id, name, location);
+//                    Models.Resort resort = new Models.Resort(id, name, location);
 //                    resorts.add(resort);
 //                }
 //            }

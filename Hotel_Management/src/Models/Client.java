@@ -1,32 +1,30 @@
-public class Staff {
+package Models;
+
+import java.time.LocalDate;
+
+public class Client {
+    private static int nextId = 1;
     private int id;
-    private int resort_id;
     private String firstname;
     private String lastname;
-    private String role;
-    private static int nextId = 1;
+    private LocalDate birthdate;
 
-    public Staff(int resort_id, String firstname, String lastname, String role) {
+    public Client(String firstname, String lastname, LocalDate birthdate) {
         this.id = ++nextId;
-        this.resort_id = resort_id;
         this.firstname = firstname;
         this.lastname = lastname;
-        this.role = role;
+        this.birthdate = birthdate;
     }
-    public Staff(int id, int resort_id, String firstname, String lastname, String role) {
+
+    public Client(Integer id, String firstname, String lastname, LocalDate birthdate) {
         this.id = id;
-        this.resort_id = resort_id;
         this.firstname = firstname;
         this.lastname = lastname;
-        this.role = role;
+        this.birthdate = birthdate;
     }
 
     public int getId() {
         return id;
-    }
-
-    public int getResort_id() {
-        return resort_id;
     }
 
     public String getFirstname() {
@@ -37,16 +35,11 @@ public class Staff {
         return lastname;
     }
 
-    public String getRole() {
-        return role;
+    public LocalDate getBirthdate() {
+        return birthdate;
     }
-
     public void setId(int id) {
         this.id = id;
-    }
-
-    public void setResort_id(int resort_id) {
-        this.resort_id = resort_id;
     }
 
     public void setFirstname(String firstname) {
@@ -57,18 +50,17 @@ public class Staff {
         this.lastname = lastname;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setBirthdate (LocalDate birthdate) {
+        this.birthdate = birthdate;
     }
 
     @Override
     public String toString() {
-        return "Staff{" +
+        return "Client{" +
                 "id=" + id +
-                ", resort_id=" + resort_id +
                 ", firstname='" + firstname + '\'' +
                 ", lastname='" + lastname + '\'' +
-                ", role='" + role + '\'' +
+                ", birthdate=" + birthdate +
                 '}';
     }
 }

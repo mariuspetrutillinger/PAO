@@ -1,3 +1,5 @@
+package Models;
+
 public class Bill {
     private int id;
     private Reservation reservation;

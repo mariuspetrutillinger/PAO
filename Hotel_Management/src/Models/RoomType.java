@@ -1,3 +1,5 @@
+package Models;
+
 public class RoomType {
     protected String description;
     protected int quantity;

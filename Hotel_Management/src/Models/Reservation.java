@@ -1,3 +1,5 @@
+package Models;
+
 public class Reservation {
     protected int reservation_number;
     protected int client_id;
